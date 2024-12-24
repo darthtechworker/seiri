@@ -2,7 +2,7 @@
 import toga
 from toga.style.pack import BOLD, COLUMN, Pack
 
-from seiri.create_pdf import create_pdf
+from seiri.utils.create_pdf import create_pdf
 
 PREVIEW_BUTTON_LABEL = "Preview"
 
