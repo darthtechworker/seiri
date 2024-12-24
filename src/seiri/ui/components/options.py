@@ -7,14 +7,14 @@ from seiri.ui.components.select_output_directory import (
 )
 
 
-def build_options_box(app):
+def build_options_container(app):
     """
-    Build the options box.
+    Build the options container.
     """
 
     build_select_output_directory_button(app)
 
-    app.options_box = toga.Box(style=Pack(direction=COLUMN, flex=1))
-    app.options_box.add(app.select_output_directory_button)
+    app.options_container = toga.Box(style=Pack(direction=COLUMN, flex=1))
+    app.options_container.add(app.select_output_directory_button)
 
-    return app.options_box
+    return app.options_container

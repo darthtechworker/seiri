@@ -84,18 +84,18 @@ def on_slider_change(widget, app):
     app.preview_image.image = toga.Image(convert_pdf_to_images(app, page_num=page_num))
 
 
-def build_preview_box(app):
+def build_preview_container(app):
     """
-    Build the preview box.
+    Build the preview container.
     """
 
     build_preview_button(app)
     build_preview_image(app)
     build_image_slider(app)
 
-    app.preview_box = toga.Box(style=Pack(direction=COLUMN, flex=2))
-    app.preview_box.add(app.preview_button)
-    app.preview_box.add(app.preview_image)
-    app.preview_box.add(app.image_slider)
+    app.preview_container = toga.Box(style=Pack(direction=COLUMN, flex=2))
+    app.preview_container.add(app.preview_button)
+    app.preview_container.add(app.preview_image)
+    app.preview_container.add(app.image_slider)
 
-    return app.preview_box
+    return app.preview_container
