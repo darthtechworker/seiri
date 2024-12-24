@@ -226,5 +226,3 @@ def build_general_options_container(app):
     app.general_options_container.add(app.margin_right_container)
     app.general_options_container.add(app.margin_bottom_container)
     app.general_options_container.add(app.margin_left_container)
-
-    return app.general_options_container

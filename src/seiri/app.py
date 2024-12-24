@@ -29,6 +29,9 @@ class Seiri(toga.App):
         self.margin_bottom = None
         self.margin_left = None
 
+        # Year options
+        self.year = None
+
         self.main_window = toga.MainWindow(
             title=f"{self.formal_name} v{self.version}",
             size=(WIDTH, HEIGHT),

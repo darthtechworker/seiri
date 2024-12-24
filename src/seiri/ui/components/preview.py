@@ -28,8 +28,6 @@ def build_preview_button(app):
         style=Pack(font_weight=BOLD, padding=(20, 275, 0, 275), height=30),
     )
 
-    return app.preview_button
-
 
 def on_click_preview_button(widget, app):
     """
@@ -38,12 +36,12 @@ def on_click_preview_button(widget, app):
 
     create_pdf(app)
 
-    number_of_pages = get_number_of_pages(app) - 1
+    number_of_pages = get_number_of_pages(app)
 
     if number_of_pages:
         app.preview_image.image = toga.Image(convert_pdf_to_images(app, page_num=0))
         app.image_slider.min = 0
-        app.image_slider.max = number_of_pages
+        app.image_slider.max = number_of_pages - 1
         app.image_slider.value = 0
 
 
@@ -57,8 +55,6 @@ def build_preview_image(app):
         style=Pack(flex=1, padding=20, alignment="center"),
     )
 
-    return app.preview_image
-
 
 def build_image_slider(app):
     """
@@ -71,8 +67,6 @@ def build_image_slider(app):
         on_change=lambda widget: on_slider_change(widget, app),
         style=Pack(flex=1, padding=20),
     )
-
-    return app.image_slider
 
 
 def on_slider_change(widget, app):
@@ -97,5 +91,3 @@ def build_preview_container(app):
     app.preview_container.add(app.preview_button)
     app.preview_container.add(app.preview_image)
     app.preview_container.add(app.image_slider)
-
-    return app.preview_container

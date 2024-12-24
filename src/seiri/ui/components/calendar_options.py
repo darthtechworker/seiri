@@ -38,16 +38,14 @@ def on_change_year_dropdown(widget, app):
     widget.on_change = lambda widget: on_change_year_dropdown(widget, app)
 
 
-def build_year_options_container(app):
+def build_calendar_options_container(app):
     """
-    Build the year options container.
+    Build the calendar options container.
     """
 
     build_select_year_container(app)
 
-    app.year_options_container = toga.Box(
+    app.calendar_options_container = toga.Box(
         style=Pack(direction=COLUMN, alignment="center", padding=(10, 0, 10, 0))
     )
-    app.year_options_container.add(app.select_year_container)
-
-    return app.year_options_container
+    app.calendar_options_container.add(app.select_year_container)

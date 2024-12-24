@@ -49,5 +49,3 @@ def build_select_output_directory_container(app):
         style=Pack(direction=COLUMN, alignment="center", padding=(20, 0, 10, 0))
     )
     app.select_output_directory_container.add(app.select_output_directory_button)
-
-    return app.select_output_directory_container
