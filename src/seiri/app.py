@@ -6,7 +6,7 @@ from seiri.ui.main import build_ui
 from seiri.utils import logging
 
 WIDTH = 1024
-HEIGHT = 800
+HEIGHT = 975
 
 logger = logging.getLogger(__name__)
 

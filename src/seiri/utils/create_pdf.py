@@ -27,10 +27,13 @@ def create_pdf(app):
 
         page_width, page_height = 1404, 1872
         c = canvas.Canvas(str(app.pdf_path), pagesize=(page_width, page_height))
-        c.drawString(
-            100, page_height - 100, "Hello, this is a PDF page of size 1404 × 1872."
-        )
-        c.showPage()
+        for page_number in range(1, 900):
+            c.drawString(
+                100,
+                page_height - 100,
+                f"This is page {page_number} of size 1404 × 1872.",
+            )
+            c.showPage()
         c.save()
 
     except Exception:

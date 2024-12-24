@@ -3,10 +3,13 @@ import platform
 import re
 import subprocess
 import unicodedata
+from typing import List
 
 from seiri.utils import logging
 
 logger = logging.getLogger(__name__)
+
+SUPPORTED_IMAGE_EXTENSIONS = [".jpg", ".jpeg", ".png"]
 
 
 def create_directory(directory_path: str) -> None:
@@ -91,3 +94,37 @@ def open_directory_in_ui(directory_path: str) -> None:
         subprocess.run(["xdg-open", directory_path], check=True)
     else:
         print(f"Unsupported operating system: {system}")
+
+
+def get_supported_images(directory_path) -> List[str]:
+    """
+    Get the supported images.
+
+    Parameters:
+    directory_path (str): The path of the directory containing the images.
+
+    Returns:
+    List[str]: The sorted names of the supported images.
+    """
+
+    image_names = []
+    for image_name in os.listdir(directory_path):
+        if image_name.lower().endswith(tuple(SUPPORTED_IMAGE_EXTENSIONS)):
+            image_names.append(image_name)
+
+    image_names.sort()
+
+    return image_names
+
+
+def cleanup_directory(directory_path: str) -> None:
+    """
+    Cleanup the directory by removing all images in it.
+
+    Parameters:
+    directory_path (str): The path of the directory to cleanup.
+    """
+
+    for file_name in os.listdir(directory_path):
+        if file_name.lower().endswith(tuple(SUPPORTED_IMAGE_EXTENSIONS)):
+            os.remove(os.path.join(directory_path, file_name))
