@@ -29,8 +29,9 @@ class Seiri(toga.App):
         self.margin_bottom = None
         self.margin_left = None
 
-        # Year options
+        # Calendar options
         self.year = None
+        self.first_day_of_week = None
 
         self.main_window = toga.MainWindow(
             title=f"{self.formal_name} v{self.version}",

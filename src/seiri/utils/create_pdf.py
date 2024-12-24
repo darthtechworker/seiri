@@ -31,6 +31,7 @@ def create_pdf(app):
             f"Bottom Margin:        {app.margin_bottom}px\n"
             f"Left Margin:          {app.margin_left}px\n"
             f"Selected Year:        {app.year}\n"
+            f"First Day of Week:    {app.first_day_of_week}\n"
         )
         logger.info(options_selected)
 
@@ -53,9 +54,14 @@ def insert_year_view(app, pdf_canvas):
     try:
         year = app.year
 
-        cal = calendar.Calendar(firstweekday=calendar.SUNDAY)
+        if app.first_day_of_week == "Mon":
+            cal = calendar.Calendar(firstweekday=calendar.MONDAY)
+            days_of_week = ["M", "T", "W", "T", "F", "S", "S"]
+        else:
+            cal = calendar.Calendar(firstweekday=calendar.SUNDAY)
+            days_of_week = ["S", "M", "T", "W", "T", "F", "S"]
+
         months = calendar.month_name[1:]
-        days_of_week = ["M", "T", "W", "T", "F", "S", "S"]
         month_font_size = 35
         padding_between_months = 20
 
