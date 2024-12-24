@@ -27,3 +27,5 @@ def init_ui(app):
     app.margin_right_input.value = 25
     app.margin_bottom_input.value = 25
     app.margin_left_input.value = 25
+
+    app.preview_button.enabled = False

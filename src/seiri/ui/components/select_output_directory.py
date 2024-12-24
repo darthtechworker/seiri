@@ -35,6 +35,7 @@ async def on_click_select_output_directory(widget, app):
     if selected_folder is not None:
         app.output_directory = selected_folder
         app.working_directory = app.output_directory / ".tmp"
+        app.preview_button.enabled = True
 
 
 def build_select_output_directory_container(app):

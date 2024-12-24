@@ -189,9 +189,7 @@ def build_margin_left_container(app):
         on_change=lambda widget: on_change_margin_left_input(widget, app),
     )
 
-    app.margin_left_container = toga.Box(
-        style=Pack(direction=ROW, padding=(0, 0, 10, 0))
-    )
+    app.margin_left_container = toga.Box(style=Pack(direction=ROW))
     app.margin_left_container.add(app.margin_left_label)
     app.margin_left_container.add(app.margin_left_input)
 
@@ -220,7 +218,7 @@ def build_general_options_container(app):
     build_margin_left_container(app)
 
     app.general_options_container = toga.Box(
-        style=Pack(direction=COLUMN, alignment="center", padding=(10, 0, 10, 0))
+        style=Pack(direction=COLUMN, alignment="center", padding=(10, 0, 0, 0))
     )
     app.general_options_container.add(app.device_height_container)
     app.general_options_container.add(app.device_width_container)
