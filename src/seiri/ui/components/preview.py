@@ -6,8 +6,7 @@ import toga
 from toga.style.pack import BOLD, COLUMN, Pack
 
 from seiri.utils.create_pdf import create_pdf
-from seiri.utils.file import get_supported_images
-from seiri.utils.preview_pdf import convert_pdf_to_images
+from seiri.utils.preview_pdf import convert_pdf_to_images, get_number_of_pages
 
 PREVIEW_BUTTON_LABEL = "Update Preview"
 PLACEHOLDER_IMAGE_PATH = None
@@ -38,16 +37,13 @@ def on_click_preview_button(widget, app):
     """
 
     create_pdf(app)
-    convert_pdf_to_images(app)
 
-    app.images = get_supported_images(app.working_directory)
+    number_of_pages = get_number_of_pages(app) - 1
 
-    if app.images:
-        app.preview_image.image = toga.Image(
-            os.path.join(app.working_directory, app.images[0])
-        )
+    if number_of_pages:
+        app.preview_image.image = toga.Image(convert_pdf_to_images(app, page_num=0))
         app.image_slider.min = 0
-        app.image_slider.max = len(app.images) - 1
+        app.image_slider.max = number_of_pages
         app.image_slider.value = 0
 
 
@@ -84,11 +80,8 @@ def on_slider_change(widget, app):
     Handle the slider change event.
     """
 
-    if app.images:
-        index = int(widget.value)
-        app.preview_image.image = toga.Image(
-            os.path.join(app.working_directory, app.images[index])
-        )
+    page_num = int(widget.value)
+    app.preview_image.image = toga.Image(convert_pdf_to_images(app, page_num=page_num))
 
 
 def build_preview_box(app):
