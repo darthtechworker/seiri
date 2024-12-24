@@ -1,7 +1,7 @@
 import asyncio
 
 import toga
-from toga.style.pack import BOLD, Pack
+from toga.style.pack import BOLD, COLUMN, Pack
 
 SELECT_OUTPUT_DIRECTORY_LABEL = "Select Output Directory"
 
@@ -16,7 +16,7 @@ def build_select_output_directory_button(app):
         on_press=lambda widget: asyncio.ensure_future(
             on_click_select_output_directory(widget, app)
         ),
-        style=Pack(font_weight=BOLD, padding=(20, 80, 10, 80), height=30),
+        style=Pack(font_weight=BOLD, height=30, width=200),
     )
 
 
@@ -35,3 +35,18 @@ async def on_click_select_output_directory(widget, app):
     if selected_folder is not None:
         app.output_directory = selected_folder
         app.working_directory = app.output_directory / ".tmp"
+
+
+def build_select_output_directory_container(app):
+    """
+    Build the select output directory container.
+    """
+
+    build_select_output_directory_button(app)
+
+    app.select_output_directory_container = toga.Box(
+        style=Pack(direction=COLUMN, alignment="center", padding=(20, 0, 10, 0))
+    )
+    app.select_output_directory_container.add(app.select_output_directory_button)
+
+    return app.select_output_directory_container

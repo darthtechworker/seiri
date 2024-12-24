@@ -20,3 +20,10 @@ def init_ui(app):
     """
     Initialize the UI.
     """
+
+    app.device_height_input.value = 1872
+    app.device_width_input.value = 1404
+    app.margin_top_input.value = 25
+    app.margin_right_input.value = 25
+    app.margin_bottom_input.value = 25
+    app.margin_left_input.value = 25

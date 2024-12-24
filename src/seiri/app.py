@@ -21,6 +21,14 @@ class Seiri(toga.App):
         self.working_directory = None
         self.pdf_path = None
 
+        # General options
+        self.device_height = None
+        self.device_width = None
+        self.margin_top = None
+        self.margin_right = None
+        self.margin_bottom = None
+        self.margin_left = None
+
         self.main_window = toga.MainWindow(
             title=f"{self.formal_name} v{self.version}",
             size=(WIDTH, HEIGHT),

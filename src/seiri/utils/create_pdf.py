@@ -22,17 +22,18 @@ def create_pdf(app):
             f"Output Directory:     {app.output_directory}\n"
             f"Working Directory:    {app.working_directory}\n"
             f"PDF Path:             {app.pdf_path}\n"
+            f"Device Height:        {app.device_height}px\n"
+            f"Device Width:         {app.device_width}px\n"
+            f"Top Margin:           {app.margin_top}px\n"
+            f"Right Margin:         {app.margin_right}px\n"
+            f"Bottom Margin:        {app.margin_bottom}px\n"
+            f"Left Margin:          {app.margin_left}px\n"
         )
         logger.info(options_selected)
 
-        page_width, page_height = 1404, 1872
+        page_width, page_height = app.device_width, app.device_height
         c = canvas.Canvas(str(app.pdf_path), pagesize=(page_width, page_height))
-        for page_number in range(1, 900):
-            c.drawString(
-                100,
-                page_height - 100,
-                f"This is page {page_number} of size 1404 × 1872.",
-            )
+        for page_number in range(0, 5):
             c.showPage()
         c.save()
 
