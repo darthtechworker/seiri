@@ -1,0 +1,38 @@
+[tool.briefcase]
+project_name = "Seiri"
+bundle = "com.darthtechworker"
+version = "0.0.1"
+url = ""
+license.file = "LICENSE"
+author = "darthtechworker"
+author_email = ""
+
+[tool.briefcase.app.seiri]
+formal_name = "Seiri"
+description = "An yearly planner generator"
+long_description = """"""
+icon = "icons/seiri"
+sources = [
+    "src/seiri",
+]
+test_sources = [
+    "tests",
+]
+
+requires = [
+]
+test_requires = [
+    "pytest",
+]
+
+[tool.briefcase.app.seiri.macOS]
+universal_build = false
+requires = [
+    "toga-cocoa~=0.4.7",
+    "std-nslog~=1.0.3",
+]
+
+[tool.briefcase.app.seiri.windows]
+requires = [
+    "toga-winforms~=0.4.7",
+]

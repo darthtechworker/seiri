@@ -1,0 +1,12 @@
+# Virtual Environment
+.venv
+
+# Generated Files
+logs/
+build/
+dist/
+**/__pycache__/
+src/seiri.dist-info/
+
+# Other
+.DS_Store
