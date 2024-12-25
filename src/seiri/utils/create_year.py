@@ -72,6 +72,21 @@ def insert_year(app, pdf_canvas):
             center_x = month_x + (month_width / 2)
             pdf_canvas.drawString(center_x - text_width / 2, month_y, month_name)
 
+            link_x1 = center_x - text_width / 2
+            link_y1 = month_y + month_font_size
+            link_x2 = center_x + text_width / 2
+            link_y2 = month_y
+            destination_name = f"month_{month_index + 1}"
+            pdf_canvas.setStrokeColor((0, 0, 1))
+            pdf_canvas.setLineWidth(1)
+            pdf_canvas.rect(link_x1, link_y1, link_x2 - link_x1, link_y2 - link_y1)
+            pdf_canvas.linkRect(
+                contents=f"Go to {month_name}",
+                destinationname=destination_name,
+                Rect=(link_x1, link_y1, link_x2, link_y2),
+                relative=0,
+            )
+
             day_of_week_y = month_y - vertical_spacing
 
             pdf_canvas.setFont(week_font, day_of_week_font_size)

@@ -50,6 +50,9 @@ def insert_months(app, pdf_canvas):
             y_offset = app.device_width - app.margin_left - month_font_size
 
         for month in range(1, 13):
+            destination_name = f"month_{month}"
+            pdf_canvas.bookmarkPage(destination_name)
+
             month_name = calendar.month_name[month]
             pdf_canvas.setFont(month_font, month_font_size)
             text_width = pdf_canvas.stringWidth(month_name, month_font, month_font_size)
