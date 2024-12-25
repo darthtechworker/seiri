@@ -29,6 +29,7 @@ def init_ui(app):
     app.margin_right_input.value = 50
     app.margin_bottom_input.value = 50
     app.margin_left_input.value = 50
+    app.select_layout_dropdown.value = app.select_layout_dropdown.items[0].value
     app.year_dropdown.value = app.year_dropdown.items[0].value
     app.first_day_of_week_dropdown.value = app.first_day_of_week_dropdown.items[0].value
 

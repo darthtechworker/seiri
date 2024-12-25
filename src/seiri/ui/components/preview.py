@@ -11,6 +11,10 @@ from seiri.utils.preview_pdf import convert_pdf_to_images, get_number_of_pages
 PREVIEW_BUTTON_LABEL = "Update Preview"
 PLACEHOLDER_IMAGE_PATH = None
 
+WIDTH = 1000
+HEIGHT = 1000
+WIDE_WIDTH = 1300
+
 if platform.system() == "Darwin":
     PLACEHOLDER_IMAGE_PATH = os.path.abspath(
         os.path.join(os.path.dirname(__file__), "../../resources/preview.png")
@@ -37,6 +41,13 @@ def on_click_preview_button(widget, app):
     create_pdf(app)
 
     number_of_pages = get_number_of_pages(app)
+
+    if app.layout == "Tall":
+        app.main_window.size = (WIDTH, HEIGHT)
+        app.preview_container.style.flex = 2
+    else:
+        app.main_window.size = (WIDE_WIDTH, HEIGHT)
+        app.preview_container.style.flex = 3
 
     if number_of_pages:
         app.preview_image.image = toga.Image(convert_pdf_to_images(app, page_num=0))

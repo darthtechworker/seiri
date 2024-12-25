@@ -7,6 +7,7 @@ MARGIN_TOP_LABEL = "Margin Top:"
 MARGIN_RIGHT_LABEL = "Margin Right:"
 MARGIN_BOTTOM_LABEL = "Margin Bottom:"
 MARGIN_LEFT_LABEL = "Margin Left:"
+LAYOUT_LABEL = "Layout:"
 
 
 def build_device_height_container(app):
@@ -189,7 +190,9 @@ def build_margin_left_container(app):
         on_change=lambda widget: on_change_margin_left_input(widget, app),
     )
 
-    app.margin_left_container = toga.Box(style=Pack(direction=ROW))
+    app.margin_left_container = toga.Box(
+        style=Pack(direction=ROW, padding=(0, 0, 10, 0))
+    )
     app.margin_left_container.add(app.margin_left_label)
     app.margin_left_container.add(app.margin_left_input)
 
@@ -205,6 +208,36 @@ def on_change_margin_left_input(widget, app):
     widget.on_change = lambda widget: on_change_margin_left_input(widget, app)
 
 
+def build_select_layout_container(app):
+    """
+    Build the select layout container.
+    """
+
+    app.select_layout_label = toga.Label(
+        text=LAYOUT_LABEL,
+        style=Pack(font_weight=BOLD, padding=(0, 80, 0, 0)),
+    )
+    app.select_layout_dropdown = toga.Selection(
+        items=["Tall", "Wide"],
+        style=Pack(width=67),
+        on_change=lambda widget: on_change_select_layout_dropdown(widget, app),
+    )
+
+    app.select_layout_container = toga.Box(style=Pack(direction=ROW))
+    app.select_layout_container.add(app.select_layout_label)
+    app.select_layout_container.add(app.select_layout_dropdown)
+
+
+def on_change_select_layout_dropdown(widget, app):
+    """
+    Handle the change event on the select layout dropdown.
+    """
+
+    widget.on_change = None
+    app.layout = widget.value
+    widget.on_change = lambda widget: on_change_select_layout_dropdown(widget, app)
+
+
 def build_general_options_container(app):
     """
     Build the general options container.
@@ -216,6 +249,7 @@ def build_general_options_container(app):
     build_margin_right_container(app)
     build_margin_bottom_container(app)
     build_margin_left_container(app)
+    build_select_layout_container(app)
 
     app.general_options_container = toga.Box(
         style=Pack(direction=COLUMN, alignment="center", padding=(10, 0, 0, 0))
@@ -226,3 +260,4 @@ def build_general_options_container(app):
     app.general_options_container.add(app.margin_right_container)
     app.general_options_container.add(app.margin_bottom_container)
     app.general_options_container.add(app.margin_left_container)
+    app.general_options_container.add(app.select_layout_container)

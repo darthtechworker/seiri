@@ -28,6 +28,7 @@ class Seiri(toga.App):
         self.margin_right = None
         self.margin_bottom = None
         self.margin_left = None
+        self.layout = None
 
         # Calendar options
         self.year = None

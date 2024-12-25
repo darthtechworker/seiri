@@ -32,10 +32,15 @@ def create_pdf(app):
             f"Left Margin:          {app.margin_left}px\n"
             f"Selected Year:        {app.year}\n"
             f"First Day of Week:    {app.first_day_of_week}\n"
+            f"Layout:               {app.layout}\n"
         )
         logger.info(options_selected)
 
-        page_width, page_height = app.device_width, app.device_height
+        if app.layout == "Tall":
+            page_width, page_height = app.device_width, app.device_height
+        else:
+            page_width, page_height = app.device_height, app.device_width
+
         pdf_canvas = canvas.Canvas(
             str(app.pdf_path), pagesize=(page_width, page_height)
         )
@@ -70,24 +75,40 @@ def insert_year_view(app, pdf_canvas):
         day_font = "Helvetica"
         day_font_size = 25
 
-        usable_width = app.device_width - app.margin_left - app.margin_right
-        usable_height = app.device_height - app.margin_top - app.margin_bottom
-
-        month_width = (usable_width - 2 * padding_between_months) / 3
-        month_height = (usable_height - 3 * padding_between_months) / 4
+        if app.layout == "Tall":
+            usable_width = app.device_width - app.margin_left - app.margin_right
+            usable_height = app.device_height - app.margin_top - app.margin_bottom
+            month_width = (usable_width - 2 * padding_between_months) / 3
+            month_height = (usable_height - 3 * padding_between_months) / 4
+        else:
+            usable_width = app.device_height - app.margin_top - app.margin_bottom
+            usable_height = app.device_width - app.margin_left - app.margin_right
+            month_width = (usable_width - 3 * padding_between_months) / 4
+            month_height = (usable_height - 2 * padding_between_months) / 3
 
         vertical_spacing = month_height / 8
 
         x_offset = app.margin_left
-        y_offset = app.device_height - app.margin_top - month_font_size
+        if app.layout == "Tall":
+            y_offset = app.device_height - app.margin_top - month_font_size
+        else:
+            y_offset = app.device_width - app.margin_top - month_font_size
 
         for month_index, month_name in enumerate(months):
-            month_x = x_offset + (month_index % 3) * (
-                month_width + padding_between_months
-            )
-            month_y = y_offset - (month_index // 3) * (
-                month_height + padding_between_months
-            )
+            if app.layout == "Tall":
+                month_x = x_offset + (month_index % 3) * (
+                    month_width + padding_between_months
+                )
+                month_y = y_offset - (month_index // 3) * (
+                    month_height + padding_between_months
+                )
+            else:
+                month_x = x_offset + (month_index % 4) * (
+                    month_width + padding_between_months
+                )
+                month_y = y_offset - (month_index // 4) * (
+                    month_height + padding_between_months
+                )
 
             pdf_canvas.setFont(month_font, month_font_size)
             text_width = pdf_canvas.stringWidth(month_name, month_font, month_font_size)
