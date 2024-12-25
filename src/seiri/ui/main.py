@@ -40,3 +40,4 @@ def init_ui(app):
     app.working_directory = app.output_directory / ".tmp"
     app.preview_button.enabled = True
     on_click_preview_button(None, app)
+    app.image_slider.value = 1
