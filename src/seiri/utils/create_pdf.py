@@ -67,10 +67,10 @@ def insert_year_view(app, pdf_canvas):
             days_of_week = ["S", "M", "T", "W", "T", "F", "S"]
 
         months = calendar.month_name[1:]
-        month_font = "Helvetica"
+        month_font = "Helvetica-Bold"
         month_font_size = 35
         padding_between_months = 30
-        week_font = "Helvetica-Bold"
+        week_font = "Helvetica"
         day_of_week_font_size = 25
         day_font = "Helvetica"
         day_font_size = 25
