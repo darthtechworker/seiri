@@ -40,7 +40,7 @@ def convert_pdf_to_images(app, page_num):
     pdf_document = fitz.open(app.pdf_path)
     page = pdf_document.load_page(page_num)
     pix = page.get_pixmap()
-    image_path = os.path.join(app.working_directory, f"Page {page_num + 1}.png")
+    image_path = os.path.join(app.working_directory, f"Page {page_num}.png")
     pix.save(image_path)
     pdf_document.close()
 
