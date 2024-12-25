@@ -1,6 +1,7 @@
 import calendar
 
 from seiri.utils import logging
+from seiri.utils.font_utils import get_font_scale_factor
 
 logger = logging.getLogger(__name__)
 
@@ -20,14 +21,16 @@ def insert_year(app, pdf_canvas):
             cal = calendar.Calendar(firstweekday=calendar.SUNDAY)
             days_of_week = ["S", "M", "T", "W", "T", "F", "S"]
 
+        font_scale_factor = get_font_scale_factor(app)
+
         months = calendar.month_name[1:]
         month_font = "Helvetica-Bold"
-        month_font_size = 35
-        padding_between_months = 30
+        month_font_size = 35 * font_scale_factor
+        padding_between_months = 30 * font_scale_factor
         week_font = "Helvetica"
-        day_of_week_font_size = 25
+        day_of_week_font_size = 25 * font_scale_factor
         day_font = "Helvetica"
-        day_font_size = 25
+        day_font_size = 25 * font_scale_factor
 
         if app.layout == "Tall":
             usable_width = app.device_width - app.margin_left - app.margin_right
