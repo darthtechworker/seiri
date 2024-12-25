@@ -12,7 +12,8 @@ def insert_year(app, pdf_canvas):
     """
 
     try:
-        year = app.year
+        destination_name = "year"
+        pdf_canvas.bookmarkPage(destination_name)
 
         if app.first_day_of_week == "Mon":
             cal = calendar.Calendar(firstweekday=calendar.MONDAY)
@@ -23,49 +24,63 @@ def insert_year(app, pdf_canvas):
 
         font_scale_factor = get_font_scale_factor(app)
 
+        year_font = "Helvetica-Bold"
+        year_font_size = 50 * font_scale_factor
         months = calendar.month_name[1:]
         month_font = "Helvetica-Bold"
         month_font_size = 35 * font_scale_factor
-        padding_between_months = 30 * font_scale_factor
         week_font = "Helvetica"
         day_of_week_font_size = 25 * font_scale_factor
         day_font = "Helvetica"
         day_font_size = 25 * font_scale_factor
+        padding = 30 * font_scale_factor
 
         if app.layout == "Tall":
             usable_width = app.device_width - app.margin_left - app.margin_right
-            usable_height = app.device_height - app.margin_top - app.margin_bottom
-            month_width = (usable_width - 2 * padding_between_months) / 3
-            month_height = (usable_height - 3 * padding_between_months) / 4
+            usable_height = (
+                app.device_height
+                - app.margin_top
+                - app.margin_bottom
+                - year_font_size
+                - 2 * padding
+            )
+            month_width = (usable_width - 2 * padding) / 3
+            month_height = (usable_height - 3 * padding) / 4
         else:
             usable_width = app.device_height - app.margin_top - app.margin_bottom
-            usable_height = app.device_width - app.margin_left - app.margin_right
-            month_width = (usable_width - 3 * padding_between_months) / 4
-            month_height = (usable_height - 2 * padding_between_months) / 3
+            usable_height = (
+                app.device_width
+                - app.margin_left
+                - app.margin_right
+                - year_font_size
+                - 2 * padding
+            )
+            month_width = (usable_width - 3 * padding) / 4
+            month_height = (usable_height - 2 * padding) / 3
 
         vertical_spacing = month_height / 8
 
         x_offset = app.margin_left
         if app.layout == "Tall":
-            y_offset = app.device_height - app.margin_top - month_font_size
+            y_offset = app.device_height - app.margin_top - year_font_size
         else:
-            y_offset = app.device_width - app.margin_top - month_font_size
+            y_offset = app.device_width - app.margin_top - year_font_size
+
+        pdf_canvas.setFont(year_font, year_font_size)
+        year_text = str(app.year)
+        year_text_width = pdf_canvas.stringWidth(year_text, year_font, year_font_size)
+        year_center_x = x_offset + (usable_width / 2)
+        pdf_canvas.drawString(year_center_x - year_text_width / 2, y_offset, year_text)
+
+        y_offset -= year_font_size + padding
 
         for month_index, month_name in enumerate(months):
             if app.layout == "Tall":
-                month_x = x_offset + (month_index % 3) * (
-                    month_width + padding_between_months
-                )
-                month_y = y_offset - (month_index // 3) * (
-                    month_height + padding_between_months
-                )
+                month_x = x_offset + (month_index % 3) * (month_width + padding)
+                month_y = y_offset - (month_index // 3) * (month_height + padding)
             else:
-                month_x = x_offset + (month_index % 4) * (
-                    month_width + padding_between_months
-                )
-                month_y = y_offset - (month_index // 4) * (
-                    month_height + padding_between_months
-                )
+                month_x = x_offset + (month_index % 4) * (month_width + padding)
+                month_y = y_offset - (month_index // 4) * (month_height + padding)
 
             pdf_canvas.setFont(month_font, month_font_size)
             text_width = pdf_canvas.stringWidth(month_name, month_font, month_font_size)
@@ -100,7 +115,7 @@ def insert_year(app, pdf_canvas):
             day_y = day_of_week_y - vertical_spacing
 
             pdf_canvas.setFont(day_font, day_font_size)
-            days = cal.monthdayscalendar(year, month_index + 1)
+            days = cal.monthdayscalendar(app.year, month_index + 1)
             for week in days:
                 for i, day in enumerate(week):
                     if day != 0:
