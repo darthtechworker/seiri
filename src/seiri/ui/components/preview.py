@@ -29,7 +29,7 @@ def build_preview_button(app):
     app.preview_button = toga.Button(
         PREVIEW_BUTTON_LABEL,
         on_press=lambda widget: on_click_preview_button(widget, app),
-        style=Pack(font_weight=BOLD, height=30, width=180, padding=(20, 0, 10, 0)),
+        style=Pack(font_weight=BOLD, height=30, width=145, padding=(20, 0, 10, 0)),
     )
 
 

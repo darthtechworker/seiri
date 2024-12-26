@@ -12,19 +12,17 @@ def insert_months(app, pdf_canvas):
     """
 
     try:
-        year = app.year
-
         if app.first_day_of_week == "Mon":
             cal = calendar.Calendar(firstweekday=calendar.MONDAY)
-            days_of_week = ["M", "T", "W", "T", "F", "S", "S"]
+            days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         else:
             cal = calendar.Calendar(firstweekday=calendar.SUNDAY)
-            days_of_week = ["S", "M", "T", "W", "T", "F", "S"]
+            days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
         font_scale_factor = get_font_scale_factor(app)
 
-        month_font = "Helvetica-Bold"
-        month_font_size = 50 * font_scale_factor
+        breadcrumb_font = "Helvetica-Bold"
+        breadcrumb_font_size = 40 * font_scale_factor
         week_font = "Helvetica"
         day_of_week_font_size = 30 * font_scale_factor
         day_font = "Helvetica"
@@ -44,20 +42,45 @@ def insert_months(app, pdf_canvas):
 
         if app.layout == "Tall":
             x_offset = app.margin_left
-            y_offset = app.device_height - app.margin_top - month_font_size
+            y_offset = app.device_height - app.margin_top - breadcrumb_font_size
         else:
             x_offset = app.margin_top
-            y_offset = app.device_width - app.margin_left - month_font_size
+            y_offset = app.device_width - app.margin_left - breadcrumb_font_size
 
         for month in range(1, 13):
             destination_name = f"month_{month}"
             pdf_canvas.bookmarkPage(destination_name)
 
+            pdf_canvas.setFont(breadcrumb_font, breadcrumb_font_size)
+            year_name = str(app.year)
+            pdf_canvas.drawString(x_offset, y_offset, year_name)
+
+            year_text_width = pdf_canvas.stringWidth(
+                year_name, breadcrumb_font, breadcrumb_font_size
+            )
+            pdf_canvas.linkRect(
+                contents="Go to year",
+                destinationname="year",
+                Rect=(
+                    x_offset,
+                    y_offset,
+                    x_offset + year_text_width,
+                    y_offset + breadcrumb_font_size,
+                ),
+                relative=0,
+            )
+
+            separator = " - "
+            text_width = pdf_canvas.stringWidth(
+                year_name, breadcrumb_font, breadcrumb_font_size
+            )
+            pdf_canvas.drawString(x_offset + text_width, y_offset, separator)
+
             month_name = calendar.month_name[month]
-            pdf_canvas.setFont(month_font, month_font_size)
-            text_width = pdf_canvas.stringWidth(month_name, month_font, month_font_size)
-            center_x = x_offset + (usable_width / 2)
-            pdf_canvas.drawString(center_x - text_width / 2, y_offset, month_name)
+            text_width += pdf_canvas.stringWidth(
+                separator, breadcrumb_font, breadcrumb_font_size
+            )
+            pdf_canvas.drawString(x_offset + text_width, y_offset, month_name)
 
             day_of_week_y = y_offset - (vertical_spacing / 4)
 
@@ -72,7 +95,7 @@ def insert_months(app, pdf_canvas):
             day_y = day_of_week_y - (vertical_spacing / 4)
 
             pdf_canvas.setFont(day_font, day_font_size)
-            days = cal.monthdayscalendar(year, month)
+            days = cal.monthdayscalendar(app.year, month)
             for week in days:
                 for i, day in enumerate(week):
                     if day != 0:
