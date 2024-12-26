@@ -37,7 +37,7 @@ def create_week_bookmarks(pdf_canvas, year, first_day_of_week):
     """
     Predefine bookmarks for all weeks.
     This accounts for the fact that a week can span two months.
-    Such weeks will be bookmarked as january_week_5_february_week_1.
+    Such weeks will be bookmarked as jan_week_5_feb_week_1.
     """
 
     calendar.setfirstweekday(
