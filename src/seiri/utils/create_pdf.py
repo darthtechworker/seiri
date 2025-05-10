@@ -3,6 +3,7 @@ from reportlab.pdfgen import canvas
 from seiri.utils import logging
 from seiri.utils.bookmarks import create_bookmarks
 from seiri.utils.create_months import insert_months
+from seiri.utils.create_weeks import insert_weeks
 from seiri.utils.create_year import insert_year
 from seiri.utils.file import create_directory
 
@@ -49,6 +50,7 @@ def create_pdf(app):
         create_bookmarks(app, pdf_canvas)
         insert_year(app, pdf_canvas)
         insert_months(app, pdf_canvas)
+        insert_weeks(app, pdf_canvas)
         pdf_canvas.save()
 
     except Exception:
